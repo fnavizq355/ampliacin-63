@@ -12,30 +12,27 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.AB, function () {
     if (!(juega)) {
         radio.sendString("¿JUEGAS?")
-    }
-    if (a == x) {
-        radio.sendString("GANO")
-        juega = false
-        basic.clearScreen()
-        basic.showIcon(IconNames.Happy)
-        reiniciar()
+    } else {
+        if (a == x) {
+            radio.sendString("GANO")
+            juega = false
+            basic.clearScreen()
+            basic.showIcon(IconNames.Happy)
+        }
     }
 })
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "¿JUEGAS?") {
-        juega = true
-        basic.clearScreen()
+        reiniciar()
         radio.sendString("OK")
     }
     if (receivedString == "OK") {
-        juega = true
-        basic.clearScreen()
+        reiniciar()
     }
     if (receivedString == "GANO") {
         juega = false
         basic.clearScreen()
         basic.showIcon(IconNames.Sad)
-        reiniciar()
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -50,6 +47,8 @@ function reiniciar () {
     b = 0
     x = 4
     y = 4
+    juega = true
+    basic.clearScreen()
 }
 let y = 0
 let b = 0
@@ -58,7 +57,6 @@ let a = 0
 let juega = false
 radio.setGroup(1)
 juega = false
-reiniciar()
 basic.forever(function () {
     if (juega) {
         led.plot(a, b)
